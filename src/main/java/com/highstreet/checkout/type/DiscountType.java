@@ -5,25 +5,25 @@ import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
 
-public enum EligibleType {
+public enum DiscountType {
 
-    CUSTOMER_ELIGIBLE(1, "Customer Elgible"),
-    CUSTOMER_INELIGIBLE(2, "Customer not elgible"),;
+    AMOUNT_VALUE_DISCOUNT(1, "Discount in amount value"),
+    AMOUNT_PERCENT_DISCOUNT(2, "Discount in percent value"),;
 
     private Integer code;
 
     private String description;
 
 
-    private static final Map<Integer, EligibleType> lookupByResultCode = new HashMap<Integer, EligibleType>();
+    private static final Map<Integer, DiscountType> lookupByResultCode = new HashMap<Integer, DiscountType>();
     static {
-        for (EligibleType s : EnumSet.allOf(EligibleType.class)) {
+        for (DiscountType s : EnumSet.allOf(DiscountType.class)) {
             lookupByResultCode.put(s.getCode(), s);
         }
     }
 
 
-    private EligibleType(Integer code, String description){
+    private DiscountType(Integer code, String description){
      this.code = code;
      this.description = description;
     }
