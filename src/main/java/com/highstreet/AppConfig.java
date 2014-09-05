@@ -12,6 +12,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.highstreet.checkout.exception.WebServiceHandlerExceptionResolver;
+import com.highstreet.checkout.rules.impl.PromotionRulesImpl;
+import com.highstreet.checkout.services.CheckoutService;
+import com.highstreet.checkout.services.impl.CheckoutServiceImpl;
 
 @Configuration
 @ComponentScan({"com.highstreet"})
@@ -44,6 +47,12 @@ public class AppConfig extends WebMvcConfigurerAdapter {
         WebServiceHandlerExceptionResolver exceptionHandler = new WebServiceHandlerExceptionResolver();
         exceptionHandler.setJsonObjectMapper(mapper());
         return exceptionHandler;
+    }
+    
+    @Bean
+    public CheckoutService checkOutService(){
+    	return new CheckoutServiceImpl(
+				PromotionRulesImpl.MULTIPLE_ITEMS_DISCOUNT);
     }
 
 

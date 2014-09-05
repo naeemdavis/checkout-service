@@ -1,100 +1,104 @@
 package com.highstreet.checkout.services;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.MockitoAnnotations;
 
 import com.highstreet.checkout.model.Item;
+import com.highstreet.checkout.rules.impl.PromotionRulesImpl;
 import com.highstreet.checkout.services.impl.CheckoutServiceImpl;
-import com.highstreet.checkout.type.PromotionRulesImpl;
 
 public class CheckoutServiceTest {
 
-    public CheckoutService checkoutService;
+	public CheckoutService checkoutService;
 
-    @Before
-    public void initilizeBeforeClass() {
+	@Before
+	public void initilizeBeforeClass() {
 
-        checkoutService = new CheckoutServiceImpl(PromotionRulesImpl.MULTIPLE_ITEMS_DISCOUNT);
-    }
+		checkoutService = new CheckoutServiceImpl(
+				PromotionRulesImpl.MULTIPLE_ITEMS_DISCOUNT);
+	}
 
-    @Test
-    public void testCheckOut_promotionRule_totalDiscount() {
+	@Test
+	public void testCheckOut_totalDiscount() {
 
-        Item item1 = new Item();
-        item1.setCode(001);
-        item1.setName("Travel Card Holder");
-        item1.setPrice(new BigDecimal("9.25"));
+		checkoutService.scan(getItem1());
+		checkoutService.scan(getItem2());
+		checkoutService.scan(getItem3());
 
-        Item item2 = new Item();
-        item2.setCode(002);
-        item2.setName("Personalized cufflinks");
-        item2.setPrice(new BigDecimal("45.00"));
+		BigDecimal total = checkoutService.total();
+		Assert.assertEquals(total.toString(), "66.78");
+	}
 
-        Item item3 = new Item();
-        item3.setCode(003);
-        item3.setName("Kids T-shirt");
-        item3.setPrice(new BigDecimal("19.95"));
+	@Test
+	public void testCheckOut_itemDiscount() {
 
-        checkoutService.scan(item1);
-        checkoutService.scan(item2);
-        checkoutService.scan(item3);
+		checkoutService.scan(getItem1());
+		checkoutService.scan(getItem1());
+		checkoutService.scan(getItem3());
 
+		BigDecimal total = checkoutService.total();
+		Assert.assertEquals(total.toString(), "36.95");
+	}
 
-        BigDecimal total = checkoutService.total();
+	@Test
+	public void testCheckOut_itemAndTotalDiscount() {
 
-        Assert.assertEquals(total, new BigDecimal("60"));
+		checkoutService.scan(getItem1());
+		checkoutService.scan(getItem2());
+		checkoutService.scan(getItem1());
+		checkoutService.scan(getItem3());
 
-    }
+		BigDecimal total = checkoutService.total();
+		Assert.assertEquals(total.toString(), "73.76");
+	}
 
-//    @Test
-//    public void testRewardService_promotionRule_itemDiscount() {
-//
-//        Item item1 = new Item();
-//        item1.setCode(001);
-//        item1.setName("Travel Card Holder");
-//        item1.setPrice(9.25);
-//
-//        Item item2 = new Item();
-//        item2.setCode(002);
-//        item2.setName("Personalized cufflinks");
-//        item2.setPrice(45.00);
-//
-//        Item item3 = new Item();
-//        item3.setCode(001);
-//        item3.setName("Travel Card Holder");
-//        item3.setPrice(9.25);
-//
-//    }
-//
-//    @Test
-//    public void testRewardService_promotionRule_allDiscounts() {
-//
-//        Item item1 = new Item();
-//        item1.setCode(001);
-//        item1.setName("Travel Card Holder");
-//        item1.setPrice(9.25);
-//
-//        Item item2 = new Item();
-//        item2.setCode(002);
-//        item2.setName("Personalized cufflinks");
-//        item2.setPrice(45.00);
-//
-//        Item item3 = new Item();
-//        item3.setCode(001);
-//        item3.setName("Travel Card Holder");
-//        item3.setPrice(9.25);
-//
-//        Item item4 = new Item();
-//        item4.setCode(001);
-//        item4.setName("Travel Card Holder");
-//        item4.setPrice(9.25);
-//
-//    }
+	@Test
+	public void testCheckOut_noDiscount() {
+
+		checkoutService.scan(getItem1());
+		checkoutService.scan(getItem2());
+
+		BigDecimal total = checkoutService.total();
+		Assert.assertEquals(total.toString(), "54.25");
+	}
+
+	@Test
+	public void testCheckOut_itemAndTotalDiscount_randomScan() {
+
+		checkoutService.scan(getItem1());
+		checkoutService.scan(getItem2());
+		checkoutService.scan(getItem1());
+		checkoutService.scan(getItem3());
+
+		BigDecimal total = checkoutService.total();
+		Assert.assertEquals(total.toString(), "73.76");
+	}
+
+	private Item getItem3() {
+		Item item3 = new Item();
+		item3.setCode("003");
+		item3.setName("Kids T-shirt");
+		item3.setPrice(new BigDecimal("19.95"));
+		return item3;
+	}
+
+	private Item getItem2() {
+		Item item2 = new Item();
+		item2.setCode("002");
+		item2.setName("Personalized cufflinks");
+		item2.setPrice(new BigDecimal("45.00"));
+		return item2;
+	}
+
+	private Item getItem1() {
+		Item item1 = new Item();
+		item1.setCode("001");
+		item1.setName("Travel Card Holder");
+		item1.setPrice(new BigDecimal("9.25"));
+		return item1;
+	}
 
 }

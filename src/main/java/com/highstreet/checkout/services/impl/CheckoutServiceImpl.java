@@ -1,63 +1,58 @@
 package com.highstreet.checkout.services.impl;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.highstreet.checkout.dao.PromotionDao;
+import org.springframework.stereotype.Service;
+
 import com.highstreet.checkout.model.Item;
+import com.highstreet.checkout.rules.PromotionalRules;
 import com.highstreet.checkout.services.CheckoutService;
-import com.highstreet.checkout.services.PromotionalRules;
 
 public class CheckoutServiceImpl implements CheckoutService {
 
-    private List<Item> itemList;
+	private List<Item> itemList;
 
-    private PromotionalRules promotionalRules;
+	private PromotionalRules promotionalRules;
 
-    private PromotionDao promotionDao;
+	public CheckoutServiceImpl(PromotionalRules promotionalRules) {
+		this.itemList = new ArrayList<Item>();
+		this.promotionalRules = promotionalRules;
+	}
 
+	@Override
+	public BigDecimal total() {
+		// to remove zero in end.
+		return promotionalRules.evaluateDiscountAmount(itemList)
+				.setScale(2, RoundingMode.HALF_UP).stripTrailingZeros();
 
-    public CheckoutServiceImpl(PromotionalRules promotionalRules){
-        this.itemList = new ArrayList<Item>();
-        this.promotionalRules = promotionalRules;
-    }
+	}
 
+	@Override
+	public void scan(Item item) {
+		itemList.add(item);
+	}
 
-    @Override
-    public BigDecimal total() {
-        return promotionalRules.evaluateDiscountAmount(itemList);
+	@Override
+	public void removeItem(Item item) {
+		// If we need to remove it.
+	}
 
-    }
+	/**
+	 * @return the itemList
+	 */
+	public List<Item> getItemList() {
+		return itemList;
+	}
 
-
-
-
-    @Override
-    public void scan(Item item) {
-        itemList.add(item);
-    }
-
-
-    @Override
-    public void removeItem(Item item) {
-     //If we need to remove it.
-    }
-
-
-    /**
-     * @return the itemList
-     */
-    public List<Item> getItemList() {
-        return itemList;
-    }
-
-
-    /**
-     * @param itemList the itemList to set
-     */
-    public void setItemList(List<Item> itemList) {
-        this.itemList = itemList;
-    }
+	/**
+	 * @param itemList
+	 *            the itemList to set
+	 */
+	public void setItemList(List<Item> itemList) {
+		this.itemList = itemList;
+	}
 
 }

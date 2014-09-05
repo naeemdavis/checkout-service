@@ -7,21 +7,10 @@ public class Item {
 
 
 
-    private Integer code;
+	private String code;
     private String name;
     private BigDecimal price;
-	/**
-	 * @return the code
-	 */
-	public Integer getCode() {
-		return code;
-	}
-	/**
-	 * @param code the code to set
-	 */
-	public void setCode(Integer code) {
-		this.code = code;
-	}
+
 	/**
 	 * @return the name
 	 */
@@ -46,6 +35,18 @@ public class Item {
     public void setPrice(BigDecimal price) {
         this.price = price;
     }
+	/**
+	 * @return the code
+	 */
+	public String getCode() {
+		return code;
+	}
+	/**
+	 * @param code the code to set
+	 */
+	public void setCode(String code) {
+		this.code = code;
+	}
 
 
 
