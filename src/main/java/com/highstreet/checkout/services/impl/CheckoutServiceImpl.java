@@ -5,8 +5,6 @@ import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.stereotype.Service;
-
 import com.highstreet.checkout.model.Item;
 import com.highstreet.checkout.rules.PromotionalRules;
 import com.highstreet.checkout.services.CheckoutService;
