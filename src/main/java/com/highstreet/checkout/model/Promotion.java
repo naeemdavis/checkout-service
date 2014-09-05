@@ -1,6 +1,7 @@
 package com.highstreet.checkout.model;
 
 import com.highstreet.checkout.type.DiscountType;
+import com.highstreet.checkout.type.PromotionGroupType;
 
 public class Promotion {
 
@@ -8,6 +9,7 @@ public class Promotion {
     private Integer code;
     private DiscountType discountType;
     private Double value;
+    private PromotionGroupType promotionGroupType;
     /**
      * @return the code
      */
@@ -44,5 +46,17 @@ public class Promotion {
     public void setValue(Double value) {
         this.value = value;
     }
+	/**
+	 * @return the promotionGroupType
+	 */
+	public PromotionGroupType getPromotionGroupType() {
+		return promotionGroupType;
+	}
+	/**
+	 * @param promotionGroupType the promotionGroupType to set
+	 */
+	public void setPromotionGroupType(PromotionGroupType promotionGroupType) {
+		this.promotionGroupType = promotionGroupType;
+	}
 
 }
