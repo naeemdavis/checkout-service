@@ -1,5 +1,7 @@
 package com.highstreet.checkout.model;
 
+import java.math.BigDecimal;
+
 
 public class Item {
 
@@ -7,7 +9,7 @@ public class Item {
 
     private Integer code;
     private String name;
-    private Double price;
+    private BigDecimal price;
 	/**
 	 * @return the code
 	 */
@@ -32,18 +34,19 @@ public class Item {
 	public void setName(String name) {
 		this.name = name;
 	}
-	/**
-	 * @return the price
-	 */
-	public Double getPrice() {
-		return price;
-	}
-	/**
-	 * @param price the price to set
-	 */
-	public void setPrice(Double price) {
-		this.price = price;
-	}
+    /**
+     * @return the price
+     */
+    public BigDecimal getPrice() {
+        return price;
+    }
+    /**
+     * @param price the price to set
+     */
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
 
 
 

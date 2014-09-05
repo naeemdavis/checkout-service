@@ -1,24 +1,26 @@
 package com.highstreet.checkout.services;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.MockitoAnnotations;
 
 import com.highstreet.checkout.model.Item;
 import com.highstreet.checkout.services.impl.CheckoutServiceImpl;
+import com.highstreet.checkout.type.PromotionRulesImpl;
 
 public class CheckoutServiceTest {
 
-
     public CheckoutService checkoutService;
-
-
 
     @Before
     public void initilizeBeforeClass() {
 
-     checkoutService = new CheckoutServiceImpl()
-
+        checkoutService = new CheckoutServiceImpl(PromotionRulesImpl.MULTIPLE_ITEMS_DISCOUNT);
     }
 
     @Test
@@ -27,66 +29,72 @@ public class CheckoutServiceTest {
         Item item1 = new Item();
         item1.setCode(001);
         item1.setName("Travel Card Holder");
-        item1.setPrice(9.25);
+        item1.setPrice(new BigDecimal("9.25"));
 
         Item item2 = new Item();
         item2.setCode(002);
         item2.setName("Personalized cufflinks");
-        item2.setPrice(45.00);
+        item2.setPrice(new BigDecimal("45.00"));
 
         Item item3 = new Item();
         item3.setCode(003);
         item3.setName("Kids T-shirt");
-        item3.setPrice(19.95);
+        item3.setPrice(new BigDecimal("19.95"));
+
+        checkoutService.scan(item1);
+        checkoutService.scan(item2);
+        checkoutService.scan(item3);
+
+
+        BigDecimal total = checkoutService.total();
+
+        Assert.assertEquals(total, new BigDecimal("60"));
 
     }
 
-    @Test
-    public void testRewardService_promotionRule_itemDiscount() {
-
-        Item item1 = new Item();
-        item1.setCode(001);
-        item1.setName("Travel Card Holder");
-        item1.setPrice(9.25);
-
-        Item item2 = new Item();
-        item2.setCode(002);
-        item2.setName("Personalized cufflinks");
-        item2.setPrice(45.00);
-
-        Item item3 = new Item();
-        item3.setCode(001);
-        item3.setName("Travel Card Holder");
-        item3.setPrice(9.25);
-
-
-
-
-    }
-
-    @Test
-    public void testRewardService_promotionRule_allDiscounts() {
-
-        Item item1 = new Item();
-        item1.setCode(001);
-        item1.setName("Travel Card Holder");
-        item1.setPrice(9.25);
-
-        Item item2 = new Item();
-        item2.setCode(002);
-        item2.setName("Personalized cufflinks");
-        item2.setPrice(45.00);
-
-        Item item3 = new Item();
-        item3.setCode(001);
-        item3.setName("Travel Card Holder");
-        item3.setPrice(9.25);
-
-        Item item4 = new Item();
-        item4.setCode(001);
-        item4.setName("Travel Card Holder");
-        item4.setPrice(9.25);
-
-    }
+//    @Test
+//    public void testRewardService_promotionRule_itemDiscount() {
+//
+//        Item item1 = new Item();
+//        item1.setCode(001);
+//        item1.setName("Travel Card Holder");
+//        item1.setPrice(9.25);
+//
+//        Item item2 = new Item();
+//        item2.setCode(002);
+//        item2.setName("Personalized cufflinks");
+//        item2.setPrice(45.00);
+//
+//        Item item3 = new Item();
+//        item3.setCode(001);
+//        item3.setName("Travel Card Holder");
+//        item3.setPrice(9.25);
+//
+//    }
+//
+//    @Test
+//    public void testRewardService_promotionRule_allDiscounts() {
+//
+//        Item item1 = new Item();
+//        item1.setCode(001);
+//        item1.setName("Travel Card Holder");
+//        item1.setPrice(9.25);
+//
+//        Item item2 = new Item();
+//        item2.setCode(002);
+//        item2.setName("Personalized cufflinks");
+//        item2.setPrice(45.00);
+//
+//        Item item3 = new Item();
+//        item3.setCode(001);
+//        item3.setName("Travel Card Holder");
+//        item3.setPrice(9.25);
+//
+//        Item item4 = new Item();
+//        item4.setCode(001);
+//        item4.setName("Travel Card Holder");
+//        item4.setPrice(9.25);
+//
+//    }
 
 }

@@ -1,5 +1,7 @@
 package com.highstreet.checkout.model;
 
+import java.math.BigDecimal;
+
 import com.highstreet.checkout.type.DiscountType;
 import com.highstreet.checkout.type.PromotionGroupType;
 
@@ -8,8 +10,9 @@ public class Promotion {
 
     private Integer code;
     private DiscountType discountType;
-    private Double value;
+    private BigDecimal PromotionValue;
     private PromotionGroupType promotionGroupType;
+    private Integer itemCode;
     /**
      * @return the code
      */
@@ -34,18 +37,6 @@ public class Promotion {
     public void setDiscountType(DiscountType discountType) {
         this.discountType = discountType;
     }
-    /**
-     * @return the value
-     */
-    public Double getValue() {
-        return value;
-    }
-    /**
-     * @param value the value to set
-     */
-    public void setValue(Double value) {
-        this.value = value;
-    }
 	/**
 	 * @return the promotionGroupType
 	 */
@@ -58,5 +49,29 @@ public class Promotion {
 	public void setPromotionGroupType(PromotionGroupType promotionGroupType) {
 		this.promotionGroupType = promotionGroupType;
 	}
+    /**
+     * @return the itemCode
+     */
+    public Integer getItemCode() {
+        return itemCode;
+    }
+    /**
+     * @param itemCode the itemCode to set
+     */
+    public void setItemCode(Integer itemCode) {
+        this.itemCode = itemCode;
+    }
+    /**
+     * @return the promotionValue
+     */
+    public BigDecimal getPromotionValue() {
+        return PromotionValue;
+    }
+    /**
+     * @param promotionValue the promotionValue to set
+     */
+    public void setPromotionValue(BigDecimal promotionValue) {
+        PromotionValue = promotionValue;
+    }
 
 }

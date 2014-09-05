@@ -4,6 +4,8 @@ import com.highstreet.checkout.model.Promotion;
 
 public interface PromotionDao {
 
-	public Promotion getItemPromotion(Integer code);
-	
+	public Promotion getItemPromotionByItemId(Integer code);
+
+	public Promotion getPromotionByPrice(Integer code);
+
 }

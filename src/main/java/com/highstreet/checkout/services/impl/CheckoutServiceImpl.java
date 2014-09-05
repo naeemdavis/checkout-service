@@ -1,24 +1,20 @@
 package com.highstreet.checkout.services.impl;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.neo4j.cypher.internal.compiler.v2_1.perty.docbuilders.docStructureDocBuilder;
-
 import com.highstreet.checkout.dao.PromotionDao;
 import com.highstreet.checkout.model.Item;
-import com.highstreet.checkout.model.Promotion;
 import com.highstreet.checkout.services.CheckoutService;
 import com.highstreet.checkout.services.PromotionalRules;
-import com.highstreet.checkout.type.DiscountType;
-import com.highstreet.checkout.type.PromotionGroupType;
 
 public class CheckoutServiceImpl implements CheckoutService {
 
     private List<Item> itemList;
 
     private PromotionalRules promotionalRules;
-    
+
     private PromotionDao promotionDao;
 
 
@@ -29,53 +25,13 @@ public class CheckoutServiceImpl implements CheckoutService {
 
 
     @Override
-    public Double total() {
+    public BigDecimal total() {
+        return promotionalRules.evaluateDiscountAmount(itemList);
 
-        //scan items for discount if discount available
-        Double totalPrice = 0d;
-        Promotion promotion =  null;
-        List<Item> groupItems = new ArrayList<Item>();
-
-        for(Item item : itemList){
-            promotion = promotionDao.getItemPromotion(item.getCode());
-
-            if(promotion!=null){
-            	if(promotion.getPromotionGroupType().equals(PromotionGroupType.GROUP)){
-            		//totalPrice = evaluateGroupDiscountAmount(promotion, item, groupItems);
-            	}else{
-            		totalPrice = evaluateDiscountAmount(promotion, item);
-            	}
-            }else{
-                totalPrice= totalPrice+item.getPrice();
-            }
-
-
-        }
-
-        return null;
     }
 
-    
-    private Double evaluateGroupDiscountAmount(Promotion promotion, Item item) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 
-	private Double evaluateDiscountAmount(Promotion promotion, Item item){
-    	
-    	Double discount = 0d;
-    	
-    	if(promotion.getDiscountType().equals(DiscountType.AMOUNT_PERCENT_DISCOUNT)){
-    		
-    		discount = item.getPrice() * (1/promotion.getValue());
-    	}
-    	
-    	if(promotion.getDiscountType().equals(DiscountType.AMOUNT_VALUE_DISCOUNT)){
-    		discount = item.getPrice() - promotion.getValue();    		
-    	}
-		return discount;
-    }
 
     @Override
     public void scan(Item item) {
