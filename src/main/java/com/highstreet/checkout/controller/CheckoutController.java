@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -28,10 +29,8 @@ public class CheckoutController {
      */
     @RequestMapping( value = {"/discount"}, method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.OK)
-    public @ResponseBody BigDecimal getTotalPrice(@PathVariable List<Item> items) {
-    	for(Item item: items){
-    		checkoutService.scan(item);
-    	}
+    public @ResponseBody BigDecimal getTotalPrice(@RequestBody List<Item> items) {
+        checkoutService.setItemList(items);
         return checkoutService.total();
     }
 

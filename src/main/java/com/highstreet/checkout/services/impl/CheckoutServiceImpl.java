@@ -16,7 +16,6 @@ public class CheckoutServiceImpl implements CheckoutService {
 	private PromotionalRules promotionalRules;
 
 	public CheckoutServiceImpl(PromotionalRules promotionalRules) {
-		this.itemList = new ArrayList<Item>();
 		this.promotionalRules = promotionalRules;
 	}
 
@@ -30,6 +29,9 @@ public class CheckoutServiceImpl implements CheckoutService {
 
 	@Override
 	public void scan(Item item) {
+	    if(null==this.itemList){
+	        this.itemList = new ArrayList<Item>();
+	    }
 		itemList.add(item);
 	}
 

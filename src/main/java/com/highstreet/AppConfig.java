@@ -52,7 +52,7 @@ public class AppConfig extends WebMvcConfigurerAdapter {
     @Bean
     public CheckoutService checkOutService(){
     	return new CheckoutServiceImpl(
-				PromotionRulesImpl.MULTIPLE_ITEMS_DISCOUNT);
+				PromotionRulesImpl.multipleItemsDiscount);
     }
 
 

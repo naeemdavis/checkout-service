@@ -16,7 +16,7 @@ import com.highstreet.checkout.type.DiscountType;
 @Service
 public enum PromotionRulesImpl implements PromotionalRules {
 
-	MULTIPLE_ITEMS_DISCOUNT {
+	multipleItemsDiscount {
 		public BigDecimal evaluateDiscountAmount(List<Item> itemList) {
 			List<Item> items = new ArrayList<Item>();
 
@@ -33,7 +33,7 @@ public enum PromotionRulesImpl implements PromotionalRules {
 				}
 			}
 
-			return TOTAL_DISCOUNT.evaluateDiscountAmount(items);
+			return totalDiscount.evaluateDiscountAmount(items);
 		}
 
 		private int itemCount(String code, List<Item> itemList) {
@@ -48,7 +48,7 @@ public enum PromotionRulesImpl implements PromotionalRules {
 
 	},
 
-	TOTAL_DISCOUNT {
+	totalDiscount {
 		public BigDecimal evaluateDiscountAmount(List<Item> items) {
 
 			BigDecimal amount = getTotalPrice(items);

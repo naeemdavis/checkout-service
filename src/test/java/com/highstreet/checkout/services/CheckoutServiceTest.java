@@ -18,7 +18,7 @@ public class CheckoutServiceTest {
 	public void initilizeBeforeClass() {
 
 		checkoutService = new CheckoutServiceImpl(
-				PromotionRulesImpl.MULTIPLE_ITEMS_DISCOUNT);
+				PromotionRulesImpl.multipleItemsDiscount);
 	}
 
 	@Test
